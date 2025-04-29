@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    max-width: 100vw; 
+    overflow-x: hidden;
+}
+.conteudo_topico{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    height: auto;
+    font-family: "Inter";
+}
+.conteudo_topico .titulo_topico{
+    order:1;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+.titulo_topico .line{
+    border:3px solid #00756A;
+    height: 50px;
+    width: 0;
+    border-radius: 6px;
+    margin: 0px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.titulo_topico h1{
+    font-weight: 600;
+    font-size: 50px;
+    margin: 0;
+    margin-left: 5px;
+}
+.bloco_topico_principal{
+    order:2;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    width: 100%;
+    height: 100px;
+    gap: 10px;
+    margin-bottom: 280px;
+}
+.bloco_topico_principal .materia_principal{
+    width: 45%;
+    height: auto;
+}
+.bloco_topico_principal .materia_principal img{
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    cursor: pointer;
+}
+.bloco_topico_principal .materia_principal h4{
+    font-weight: 600;
+    font-size: 25px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.bloco_topico_principal .materia_principal h4:hover{
+    text-decoration: underline;
+}
+.bloco_topico_principal .materia_principal p{
+    font-size: 20px;
+    color: #575757;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.bloco_topico_principal .materia_principal p:hover{
+    text-decoration: underline;
+}
+
+.bloco_topico_principal .materia_secundaria{
+    width: 27%;
+    height: 100%;
+}
+.bloco_topico_principal .materia_secundaria img{
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+}
+.bloco_topico_principal .materia_secundaria h4{
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.bloco_topico_principal .materia_secundaria h4:hover{
+    text-decoration: underline;
+}
+.bloco_topico_principal .materia_secundaria p{
+    font-size: 16px;
+    color: #575757;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.bloco_topico_principal .materia_secundaria p:hover{
+    text-decoration: underline;
+}
+.line_bottom{
+    width: 100%;
+    height: 1px;
+    border: #C0C0C0 1px solid;
+    border-radius: 2px;
+}
+.materia_principal .line_bottom{
+    margin-top: 5%;
+}
+.materia_secundaria .line_bottom{
+    margin-top: 113px;
+}
+.conteudo_materia {
+    order: 3;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    width: 100%;
+    heigth: 400px;
+    padding: 0px;
+    border-bottom: 2px solid #C0C0C0;
+}
+.conteudo_materia .bloco_materia{
+    padding: 10px;
+    width: 25%;
+    height: 95%;
+    text-align: start;
+}
+.conteudo_materia .bloco_materia img{
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.conteudo_materia .bloco_materia h4{
+    font-family: "Inter";
+    text-align: start;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.conteudo_materia .bloco_materia p{
+    font-family: "Inter";
+    text-align: start;
+    margin-top: 5px;
+    color:#575757;
+    cursor: pointer;
+}
+.conteudo_materia .bloco_materia h4:hover{
+    text-decoration: underline;
+}
+.conteudo_materia .bloco_materia p:hover{
+    text-decoration: underline;
+}
+
+@media screen and (max-width:900px){
+
+    .conteudo_topico{
+        margin-top: 50px;
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        font-family: "Inter";
+        padding: 20px;
+    }
+    .bloco_topico_principal{
+        order:1;
+        margin-left: 0px;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+    .bloco_topico_principal .materia_principal{
+        order:1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        margin-top: 30px;
+        padding-bottom:20px;
+        border-bottom: 2px solid #C0C0C0;
+    }
+    .bloco_topico_principal .materia_principal img{
+        order:1;
+        width:90%;
+        height: 80%;
+        border-radius: 22px;
+        cursor: pointer;
+    }
+    .texto_bloco_topico{
+        order: 2;
+        display: flex;
+        flex-direction: column;
+    }
+    .bloco_topico_principal .materia_principal h4{
+        font-size: 25px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+    .bloco_topico_principal .materia_principal p{
+        font-size: 20px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .bloco_topico_principal .line_bottom{
+        display: none;
+    }
+   
+    .bloco_topico_principal .materia_secundaria{
+        order:2;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: auto;
+        border-bottom:2px solid #C0C0C0;
+        padding-bottom: 10px;
+        margin-top: 10px;
+    }
+    .bloco_topico_principal .materia_secundaria img{
+        width: 250px;
+        height: auto;
+        border-radius: 22px;
+    }
+    .bloco_topico_principal .materia_secundaria h4{
+        font-weight: 600;
+        font-size: 18px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .bloco_topico_principal .materia_secundaria p{
+        font-size: 16px;
+        color: #575757;
+        margin:0;
+        margin-top: 20px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .conteudo_materia {
+        order: 2;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        position: relative;
+        width: 90%;
+        margin: 0px;
+        margin-top: 20px;
+        border-bottom: 2px solid white;
+    }
+
+    .conteudo_materia .bloco_materia{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        width: 100%;
+        height: 95%;
+        text-align: start;
+        border-bottom: 2px solid #C0C0C0;
+        margin-bottom: 10px;
+    }
+    .conteudo_materia .bloco_materia img{
+        width: 200px;
+        height: auto;
+        border-radius: 22px;
+        margin: 0 auto;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .bloco_materia .texto_bloco_materia h4{
+        font-family: "Inter";
+        text-align: start;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+ .bloco_materia .texto_bloco_materia  p{
+        font-family: "Inter";
+        text-align: start;
+        margin-top: 25px;
+        color:#575757;
+        cursor: pointer;
+}   
+}
