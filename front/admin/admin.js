@@ -18,6 +18,8 @@ function capturarDados() {
   const conteudo = document.getElementById('conteudo').value.trim();
   const imagem_url = document.getElementById('imagem_url').value.trim();
   const categoria = document.getElementById('categoria_id').value; // Corrigido ID
+  const isDestaque = document.getElementById('isDestaque').value;
+  const nivelDestaque = document.getElementById('nivelDestaque').value;
 
   if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria) {
       alert("Preencha todos os campos!");
@@ -32,6 +34,8 @@ function capturarDados() {
       conteudo,
       imagem_url,
       categoria,
+      isDestaque,
+      nivelDestaque,
       dataHora: dataHoraAtual
   };
 

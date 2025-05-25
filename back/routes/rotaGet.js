@@ -13,14 +13,14 @@ const {
 
 // 🔹 Rota para adicionar uma nova matéria
 router.post('/post', (req, res) => {
-    const { titulo, subtitulo, conteudo, imagem_url, categoria } = req.body;
+    const { titulo, subtitulo, conteudo, imagem_url, categoria, isDestaque, nivelDestaque } = req.body;
     const dataHora = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-    if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria) {
+    if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria || !isDestaque || !nivelDestaque) {
         return res.status(400).json({ error: "Preencha todos os campos!" });
     }
 
-    const valores = [titulo, subtitulo, conteudo, imagem_url, categoria, dataHora];
+    const valores = [titulo, subtitulo, conteudo, imagem_url, categoria, isDestaque, nivelDestaque, dataHora];
 
     connection.query(queryEnviarDadosFormulario, valores, (erro, resultado) => {
         if (erro) {
@@ -65,13 +65,25 @@ router.get("/materias/:id", (req, res) => {
 
 // 🔹 Rota para atualizar uma matéria
 router.put("/materias/:id", (req, res) => {
-    const { titulo, subtitulo, conteudo, imagem_url, categoria_id } = req.body;
+    const { titulo, subtitulo, conteudo, imagem_url, isDestaque, nivelDestaque, categoria_id } = req.body;
 
-    if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria_id) {
+    // Conversão de tipos
+    const destaque = (isDestaque === true || isDestaque === 'true' || isDestaque === 1 || isDestaque === '1') ? 1 : 0;
+    const nivel = parseInt(nivelDestaque);
+    const categoria = parseInt(categoria_id);
+
+    // Validação de campos obrigatórios (permite false e 0)
+    if (
+        titulo == null || subtitulo == null || conteudo == null || imagem_url == null ||
+        nivel == null || categoria == null
+    ) {
         return res.status(400).json({ error: "Preencha todos os campos!" });
     }
 
-    connection.query(queryUpdateMateria, [titulo, subtitulo, conteudo, imagem_url, categoria_id, req.params.id], (err, result) => {
+    connection.query(queryUpdateMateria, [
+        titulo, subtitulo, conteudo, imagem_url,
+        destaque, nivel, categoria, req.params.id
+    ], (err, result) => {
         if (err) {
             console.error("Erro ao atualizar matéria:", err);
             return res.status(500).json({ error: "Erro ao atualizar matéria" });
