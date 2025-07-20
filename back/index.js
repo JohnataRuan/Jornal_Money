@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 🔹 Habilitar CORS apenas para a origem específica
-app.use(cors({ origin: 'http://127.0.0.1:5500' }));
+app.use(cors({ origin: ['http://127.0.0.1:5500','https://jornalmoney.com'] }));
 
 // 🔹 Importando as rotas corretamente
 const rotaGet = require('./routes/rotaGet'); // Verifique se o arquivo existe!

@@ -8,7 +8,10 @@ const {
     querySelecionarMateriaPorId,
     queryUpdateMateria,
     queryDeletarMateria,
-    querySelecionarMateriaPorCategoria
+    querySelecionarMateriaPorCategoria,
+    querySelecionarTopico,
+    querySelecionarMateriaPorTitulo,
+    querySelecionarRelacionados
 } = require('../utils/queries');
 
 // 🔹 Rota para adicionar uma nova matéria
@@ -33,7 +36,7 @@ router.post('/post', (req, res) => {
 });
 
 // 🔹 Rota para listar todas as matérias
-router.get("/materias", (req, res) => {
+router.get("/todasMaterias", (req, res) => {
     connection.query(queryGetMaterias, (err, result) => {
         if (err) {
             console.error("Erro ao buscar matérias:", err);
@@ -122,5 +125,61 @@ router.delete("/materias/:id", (req, res) => {
         res.json({ message: "Matéria excluída com sucesso!" });
     });
 });
+//Selecionar o topico
+router.get('/topicos/:id', (req, res) => {
+    const categoriaID = req.params.id;
 
+    if (!categoriaID) {
+        return res.status(400).json({ error: "ID da matéria não fornecido" });
+    }
+
+    connection.query(querySelecionarTopico, [categoriaID], (err, result) => {
+        if (err) {
+            console.error("Erro ao buscar matéria:", err);
+            return res.status(500).json({ error: "Erro ao buscar matéria" });
+        }
+        if (result.length === 0) {
+            return res.status(404).json({ error: "Nenhuma matéria encontrada para essa categoria" });
+        }
+        res.json(result); // ⬅️ envia todas as matérias da categoria
+    });
+});
+//Selecionar Materia individual
+router.get('/materia/:id',(req,res) => {
+    const tituloMateria = req.params.id;
+    if(!tituloMateria){
+        return res.status(400).json({ error: "Titulo da matéria não fornecido" });
+    }
+
+    connection.query(querySelecionarMateriaPorTitulo, [tituloMateria], (err,result)=>{
+        if (err) {
+            console.error("Erro ao buscar matéria:", err);
+            return res.status(500).json({ error: "Erro ao buscar matéria" });
+        }
+        if (result.length === 0) {
+            return res.status(404).json({ error: "Nenhuma matéria encontrada para essa categoria" });
+        }
+        res.json(result); // ⬅️ envia todas as matérias da categoria
+    })
+})
+//Selecionar os Relacionados na pagina da materia
+router.get("/relacionados/:categoria", (req, res) => {
+    const categoria_id = req.params.categoria;
+    console.log("Categoria recebida:", categoria_id); // Log para verificar o ID recebido
+
+    connection.query(querySelecionarRelacionados, [categoria_id], (err, result) => {
+        if (err) {
+            console.error(`Erro ao conectar-se ao banco de dados: ${err}`);
+            return res.status(500).json({ error: "Erro ao buscar matérias" });
+        }
+
+        console.log("Matérias encontradas:", result.length); // Verifica quantos registros foram retornados
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Nenhuma matéria encontrada para essa categoria" });
+        }
+
+        res.json(result);
+    });
+});
 module.exports = router;
