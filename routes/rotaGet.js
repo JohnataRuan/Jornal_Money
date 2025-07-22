@@ -1,4 +1,4 @@
-const connection = require("../database/connection");
+const getConnection = require("../database/connection");
 const express = require('express');
 const router = express.Router();
 
@@ -18,7 +18,7 @@ const {
 router.post('/post', (req, res) => {
     const { titulo, subtitulo, conteudo, imagem_url, categoria, isDestaque, nivelDestaque } = req.body;
     const dataHora = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
+    const connection = getConnection();
     if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria || !isDestaque || !nivelDestaque) {
         return res.status(400).json({ error: "Preencha todos os campos!" });
     }
@@ -37,6 +37,7 @@ router.post('/post', (req, res) => {
 
 // 🔹 Rota para listar todas as matérias
 router.get("/todasMaterias", (req, res) => {
+    const connection = getConnection();
     connection.query(queryGetMaterias, (err, result) => {
         if (err) {
             console.error("Erro ao buscar matérias:", err);
@@ -48,7 +49,7 @@ router.get("/todasMaterias", (req, res) => {
 
 router.get("/materias/:id", (req, res) => {
     console.log("ID recebido:", req.params.id);
-    
+    const connection = getConnection();
 
     if (!req.params.id) {
         return res.status(400).json({ error: "ID da matéria não fornecido" });
@@ -69,7 +70,7 @@ router.get("/materias/:id", (req, res) => {
 // 🔹 Rota para atualizar uma matéria
 router.put("/materias/:id", (req, res) => {
     const { titulo, subtitulo, conteudo, imagem_url, isDestaque, nivelDestaque, categoria_id } = req.body;
-
+    const connection = getConnection();
     // Conversão de tipos
     const destaque = (isDestaque === true || isDestaque === 'true' || isDestaque === 1 || isDestaque === '1') ? 1 : 0;
     const nivel = parseInt(nivelDestaque);
@@ -97,6 +98,7 @@ router.put("/materias/:id", (req, res) => {
 
 router.get("/categoriasMateria/:categoria", (req, res) => {
     const categoria_id = req.params.categoria;
+    const connection = getConnection();
     console.log("Categoria recebida:", categoria_id); // Log para verificar o ID recebido
 
     connection.query(querySelecionarMateriaPorCategoria, [categoria_id], (err, result) => {
@@ -117,6 +119,7 @@ router.get("/categoriasMateria/:categoria", (req, res) => {
 
 // 🔹 Rota para excluir uma matéria
 router.delete("/materias/:id", (req, res) => {
+    const connection = getConnection();
     connection.query(queryDeletarMateria, [req.params.id], (err, result) => {
         if (err) {
             console.error("Erro ao excluir matéria:", err);
@@ -128,7 +131,7 @@ router.delete("/materias/:id", (req, res) => {
 //Selecionar o topico
 router.get('/topicos/:id', (req, res) => {
     const categoriaID = req.params.id;
-
+    const connection = getConnection();
     if (!categoriaID) {
         return res.status(400).json({ error: "ID da matéria não fornecido" });
     }
@@ -147,6 +150,7 @@ router.get('/topicos/:id', (req, res) => {
 //Selecionar Materia individual
 router.get('/materia/:id',(req,res) => {
     const tituloMateria = req.params.id;
+    const connection = getConnection();
     if(!tituloMateria){
         return res.status(400).json({ error: "Titulo da matéria não fornecido" });
     }
@@ -164,6 +168,7 @@ router.get('/materia/:id',(req,res) => {
 })
 //Selecionar os Relacionados na pagina da materia
 router.get("/relacionados/:categoria", (req, res) => {
+    const connection = getConnection();
     const categoria_id = req.params.categoria;
     console.log("Categoria recebida:", categoria_id); // Log para verificar o ID recebido
 
