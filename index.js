@@ -10,9 +10,20 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🔹 Habilitar CORS apenas para a origem específica
-app.use(cors({ origin: ['http://127.0.0.1:5500','https://jornalmoney.com'] }));
+const allowedOrigins = ['http://127.0.0.1:5500', 'https://jornalmoney.com'];
 
+app.use(cors({
+  origin: function(origin, callback){
+    // Permite requests sem origem (ex: curl, postman)
+    if(!origin) return callback(null, true);
+
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = 'O domínio não está autorizado pelo CORS.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 // 🔹 Importando as rotas corretamente
 const rotaGet = require('./routes/rotaGet'); // Verifique se o arquivo existe!
 
