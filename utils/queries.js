@@ -7,6 +7,7 @@ const querySelecionarMateriaPorCategoria = 'SELECT * FROM materia WHERE categori
 const querySelecionarTopico = "SELECT * FROM materia WHERE categoria_id = ? ORDER BY data_publicacao";
 const querySelecionarMateriaPorTitulo = 'SELECT * FROM materia WHERE titulo = ?';
 const querySelecionarRelacionados = 'Select * FROM materia WHERE categoria_id = ? ORDER BY data_publicacao DESC LIMIT 3'
+const queryRealizarLogin = 'SELECT * FROM usuarios WHERE email = ? AND senha = ?';
 module.exports = {
     queryEnviarDadosFormulario,
     queryGetMaterias,
@@ -16,5 +17,6 @@ module.exports = {
     querySelecionarMateriaPorCategoria,
     querySelecionarTopico,
     querySelecionarMateriaPorTitulo,
-    querySelecionarRelacionados
+    querySelecionarRelacionados,
+    queryRealizarLogin
 };
