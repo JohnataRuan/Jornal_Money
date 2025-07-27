@@ -184,7 +184,7 @@ router.get('/topicos/:id', (req, res) => {
     });
 });
 //Selecionar Materia individual
-router.get('/materia/:id',(req,res) => {
+router.get('/materiatitulo/:id',(req,res) => {
     const tituloMateria = req.params.id;
     const connection = getConnection();
     if(!tituloMateria){
