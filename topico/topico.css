@@ -101,7 +101,7 @@ body {
     text-decoration: none !important;
 }
 .bloco_topico_principal .materia_secundaria h4:hover{
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 .bloco_topico_principal .materia_secundaria a{
     font-size: 16px;
@@ -130,7 +130,7 @@ body {
     flex-direction: row;
     margin-top: 20px;
     width: 100%;
-    heigth: 400px;
+    height: 400px;
     padding: 0px;
     border-top: 2px solid #C0C0C0;
     border-bottom: 2px solid #C0C0C0;

@@ -119,14 +119,14 @@ function transformarMateriaEmHtml(dados, id_html) {
     };
 
     for (let materia of dados) {
-        const { titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
+        const { id,titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
 
         if (Number(nivelDestaque) === 3 && contadores[categoria_id] < 4) {
             contadores[categoria_id]++; // incrementa contador da categoria
 
             const bloco_materia = document.createElement('a');
             bloco_materia.className = 'bloco_materia';
-            bloco_materia.href = `../materia/materia.html?id=${encodeURIComponent(titulo)}`;
+            bloco_materia.href = `../materia/materia.html?id=${id}`;
 
             const img = document.createElement('img');
             img.src = imagem_url;
@@ -179,11 +179,11 @@ function carregarMateriaPrincipal(dados) {
     const materiaPrincipal = document.getElementById('noticia_principal');
 
     for (let materia of dados) {
-        const { titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
+        const { id,titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
 
         if (Number(nivelDestaque) === 1 && Number(isDestaque)===1) {
             const bloco_materia = document.createElement('a')
-            bloco_materia.href = `../materia/materia.html?id=${encodeURIComponent(materia.titulo)}`
+            bloco_materia.href =  `../materia/materia.html?id=${id}`;
             
             const tituloMateriaPrincipal = titulo;
             const subTituloMateriaPrincipal = subtitulo;
@@ -206,13 +206,13 @@ function carregarSubMaterias(dados) {
     let count = 0;
 
     for (let materia of dados) {
-        const { titulo, isDestaque, nivelDestaque } = materia;
+        const { id,titulo, isDestaque, nivelDestaque } = materia;
 
         if (Number(isDestaque) === 1 && Number(nivelDestaque) === 2) {
             if (count >= 3) break; // Garante no máximo 3 matérias
 
             const submateria = document.createElement('a');
-            submateria.href = `../materia/materia.html?id=${encodeURIComponent(materia.titulo)}`
+            submateria.href = `../materia/materia.html?id=${id}`;
             submateria.className = 'sub-materias'; // Corrigido
 
             const line = document.createElement('div');

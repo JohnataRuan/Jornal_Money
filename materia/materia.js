@@ -1,10 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-
-import { linkBancoDeDados } from '../utils/arquivos.js/linkBancoDeDados.js';
+import { linkBancoDeDados } from '../utils/arquivos/linkBancoDeDados.js';
 
 console.log(linkBancoDeDados);
-fetch(`${linkBancoDeDados}/rotas/materia/${id}`)
+fetch(`${linkBancoDeDados}/rotas/materiatitulo/${id}`)
   .then(response => {
     if (!response.ok) throw new Error("Erro ao buscar tópico");
     return response.json();
@@ -77,11 +76,11 @@ function transformarMateriaRelacionados(dados) {
   conteudo_materia.className = 'bloco_relacionados';
 
   for (let materia of dados) {
-    const { titulo, imagem_url, categoria_id } = materia;
+    const { id,titulo, imagem_url, categoria_id } = materia;
 
     const bloco_materia = document.createElement('a');
     bloco_materia.className = 'bloco_materia';
-    bloco_materia.href = `../materia/materia.html?id=${encodeURIComponent(titulo)}`;
+    bloco_materia.href = `../materia/materia.html?id=${id}`;
 
     const img = document.createElement('img');
     img.src = imagem_url;

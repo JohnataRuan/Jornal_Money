@@ -1,5 +1,5 @@
 
-import { linkBancoDeDados } from '../utils/arquivos.js/linkBancoDeDados.js';
+import { linkBancoDeDados } from '../utils/arquivos/linkBancoDeDados.js';
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -44,7 +44,7 @@ function criarMateriaPrincipal(data){
             if(materia.nivelDestaque === 1){
                  const bloco_materia = document.createElement('a');
                 bloco_materia.className = 'bloco_materia';
-                bloco_materia.href = `../materia/materia.html?id=${encodeURIComponent(materia.titulo)}`
+                bloco_materia.href = `../materia/materia.html?id=${id}`;
                 const img = document.createElement('img');
                 img.src = materia.imagem_url;
 
@@ -112,7 +112,7 @@ function criarMateriaSecundarias(data) {
 
     for (const materia of materiasUnicas) {
         const blocoMateriaSecundaria = document.createElement('a');
-        blocoMateriaSecundaria.href = `../materia/materia.html?id=${encodeURIComponent(materia.titulo)}`
+        blocoMateriaSecundaria.href = `../materia/materia.html?id=${materia.id}`;
         blocoMateriaSecundaria.className = 'materia_secundaria';
 
         const img = document.createElement('img');
@@ -178,7 +178,7 @@ function criarMateriaComuns(data) {
 
     for (const materia of grupoDeQuatro) {
       const bloco_materia = document.createElement('a');
-      bloco_materia.href = `../materia/materia.html?id=${encodeURIComponent(materia.titulo)}`
+      bloco_materia.href = `../materia/materia.html?id=${materia.id}`;
       bloco_materia.className = 'bloco_materia';
 
       const img = document.createElement('img');
