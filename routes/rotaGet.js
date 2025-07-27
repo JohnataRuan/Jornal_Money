@@ -183,25 +183,32 @@ router.get('/topicos/:id', (req, res) => {
         res.json(result); // ⬅️ envia todas as matérias da categoria
     });
 });
-//Selecionar Materia individual
-router.get('/materia/:id',(req,res) => {
-    const tituloMateria = req.params.id;
-    const connection = getConnection();
-    if(!tituloMateria){
-        return res.status(400).json({ error: "Titulo da matéria não fornecido" });
+router.get('/materiatitulo/:id', (req, res) => {
+  try {
+    // Decodifica o parâmetro para interpretar caracteres especiais corretamente
+    const tituloMateria = decodeURIComponent(req.params.id);
+
+    if (!tituloMateria) {
+      return res.status(400).json({ error: "Título da matéria não fornecido" });
     }
 
-    connection.query(querySelecionarMateriaPorTitulo, [tituloMateria], (err,result)=>{
-        if (err) {
-            console.error("Erro ao buscar matéria:", err);
-            return res.status(500).json({ error: "Erro ao buscar matéria" });
-        }
-        if (result.length === 0) {
-            return res.status(404).json({ error: "Nenhuma matéria encontrada para essa categoria" });
-        }
-        res.json(result); // ⬅️ envia todas as matérias da categoria
-    })
-})
+    const connection = getConnection();
+
+    connection.query(querySelecionarMateriaPorTitulo, [`%${tituloMateria}%`], (err, result) => {
+      if (err) {
+        console.error("Erro ao buscar matéria:", err);
+        return res.status(500).json({ error: "Erro ao buscar matéria" });
+      }
+      if (result.length === 0) {
+        return res.status(404).json({ error: "Nenhuma matéria encontrada para esse título" });
+      }
+      res.json(result);
+    });
+  } catch (error) {
+    console.error("Erro inesperado:", error);
+    res.status(500).json({ error: "Erro inesperado no servidor" });
+  }
+});
 //Selecionar os Relacionados na pagina da materia
 router.get("/relacionados/:categoria", (req, res) => {
     const connection = getConnection();
