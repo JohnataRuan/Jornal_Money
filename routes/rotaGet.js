@@ -183,7 +183,8 @@ router.get('/topicos/:id', (req, res) => {
         res.json(result); // ⬅️ envia todas as matérias da categoria
     });
 });
-router.get('/materiatitulo/:id', (req, res) => {
+
+router.get('/materia/:id', (req, res) => {
   try {
     // Decodifica o parâmetro para interpretar caracteres especiais corretamente
     const tituloMateria = decodeURIComponent(req.params.id);
@@ -209,6 +210,7 @@ router.get('/materiatitulo/:id', (req, res) => {
     res.status(500).json({ error: "Erro inesperado no servidor" });
   }
 });
+
 //Selecionar os Relacionados na pagina da materia
 router.get("/relacionados/:categoria", (req, res) => {
     const connection = getConnection();
