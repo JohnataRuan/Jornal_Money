@@ -14,7 +14,11 @@ const {
     querySelecionarTopico,
     querySelecionarMateriaPorTitulo,
     querySelecionarRelacionados,
-    queryRealizarLogin
+    queryRealizarLogin,
+    querySelecionarMateriaPrincipal,
+    querySelecionarMateriaPrincipalTopicos,
+    querySelecionarMateriaSecundarias,
+    querySelecionarMateriaSecundariaTopicos
 } = require('../utils/queries');
 
 
@@ -223,4 +227,78 @@ router.get("/relacionados/:categoria", (req, res) => {
         res.json(result);
     });
 });
+//Carregar materia principal pagina principal
+router.get('/materiaPrincipal',(req,res)=>{
+    const connection = getConnection();
+     connection.query(querySelecionarMateriaPrincipal, (err, result) => {
+        if (err) {
+            console.error(`Erro ao conectar-se ao banco de dados: ${err}`);
+            return res.status(500).json({ error: "Erro ao buscar matéria principal" });
+        }
+
+        console.log("Matérias encontradas:", result.length); // Verifica quantos registros foram retornados
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Nenhuma matéria encontrada para essa categoria" });
+        }
+
+        res.json(result);
+    });
+})
+//Carregar materias secundarias pagina principal
+router.get('/materiaSecundarias',(req,res)=>{
+    const connection = getConnection();
+     connection.query(querySelecionarMateriaSecundarias, (err, result) => {
+        if (err) {
+            console.error(`Erro ao conectar-se ao banco de dados: ${err}`);
+            return res.status(500).json({ error: "Erro ao buscar matéria principal" });
+        }
+
+        console.log("Matérias encontradas:", result.length); // Verifica quantos registros foram retornados
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Nenhuma matéria encontrada para essa categoria" });
+        }
+
+        res.json(result);
+    });
+})
+//Carregar materia principal pagina topicos
+router.get('/materiaPrincipalTopico/:id',(req,res)=>{
+    const connection = getConnection();
+    const categoria_id = req.params.id;
+     connection.query(querySelecionarMateriaPrincipalTopicos,[categoria_id], (err, result) => {
+        if (err) {
+            console.error(`Erro ao conectar-se ao banco de dados: ${err}`);
+            return res.status(500).json({ error: "Erro ao buscar matéria principal" });
+        }
+
+        console.log("Matérias encontradas:", result.length); // Verifica quantos registros foram retornados
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Nenhuma matéria encontrada para essa categoria" });
+        }
+
+        res.json(result);
+    });
+})
+//Carregar materia secundarias pagina topicos
+router.get('/materiaSecundariaTopico/:id',(req,res)=>{
+    const connection = getConnection();
+    const categoria_id = req.params.id;
+     connection.query(querySelecionarMateriaSecundariaTopicos,[categoria_id], (err, result) => {
+        if (err) {
+            console.error(`Erro ao conectar-se ao banco de dados: ${err}`);
+            return res.status(500).json({ error: "Erro ao buscar matéria principal" });
+        }
+
+        console.log("Matérias encontradas:", result.length); // Verifica quantos registros foram retornados
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Nenhuma matéria encontrada para essa categoria" });
+        }
+
+        res.json(result);
+    });
+})
 module.exports = router;
