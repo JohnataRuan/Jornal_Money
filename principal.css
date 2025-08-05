@@ -12,30 +12,29 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.manchete{
-    order: 1;
-    display: inline-block;
+.manchete {
     position: relative;
-    width:100%;
-    height: 250px;
+    width: 100%;
+    height: auto;
     background-color: #445857;
-    top:150px;
+    padding-top: 20px;   /* Espaço acima */
+    padding-bottom: 20px; /* Espaço abaixo */
     font-family: 'Libre Baskerville';
-    margin: 0 auto;
-    margin-bottom: 240px;
- 
+    box-sizing: border-box;
+    clip-path: inset(40px 0 40px 0); /* recorta 40px em cima e embaixo */
 }
-.manchete .bloco_manchete{
-    display: block;
+
+.manchete .bloco_manchete {
     position: relative;
-    top: -40px;
-    width:800px;
-    height: calc(100% + 80px);
+    width: 800px;
+    max-width: 95vw;
+    margin: 0 auto;
     background-color: #7EA7A4;
     border-radius: 22px;
-    text-align: start;
-    padding:20px;
+    padding: 40px;
+    box-sizing: border-box;
 }
+
 
 .bloco_manchete .noticia_principal {
     position: relative; /* Necessário para que o hover na div afete os filhos */
@@ -172,24 +171,26 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    heigth: 400px;
+    height: auto;
+    max-height: 350px;
     padding: 20px;
     border-bottom: 2px solid #C0C0C0;
 }
 .conteudo_materia .bloco_materia{
-    padding: 10px;
     width: 25%;
     height: 95%;
     font-size: 18px;
     text-align: start;
+        padding: 5px;
 }
 
-.conteudo_materia .bloco_materia img{
-    width: 100%;
-    height: auto;
+.conteudo_materia .bloco_materia img {
+    width: 180px;
+    height: 130px;           /* Define altura fixa */
     border-radius: 22px;
-    margin: 0 auto;
+    margin: 0;               /* Remove centralização automática */
     cursor: pointer;
+    object-fit: cover;       /* Garante que a imagem ocupe bem o espaço */
 }
 .conteudo_materia .bloco_materia h4{
     font-family: "Inter";
@@ -217,22 +218,18 @@ body {
         display: inline-block;
         position: relative;
         width:100%;
-        height: 200px;
-        background-color: white;
-        top:0;
+        height: auto;
+        background-color: #445857;
+        padding: 40px;
         font-family: 'Libre Baskerville';
         margin: 0 auto;
-        margin-top: 80px;
-        margin-bottom: 120px;
     }
 
     .manchete .bloco_manchete{
         display: block;
         position: relative;
-        top: -40px;
         width:100%;
         border-radius: 0px;
-        height: 350px;
         background-color: #7EA7A4;
         text-align: start;
         padding:10px;
@@ -289,12 +286,17 @@ body {
     }
 
     .materias {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        flex-wrap: nowrap;
         order:2;
-        position:relative;
         align-items: start;
         order: 6;
-        margin-top: 0px; /* Ajuste esse valor conforme necessário */
+        margin-top: 20px; /* Ajuste esse valor conforme necessário */
         width: 100%;
+        height: 780px;
+        min-height: 200px;
     }
     .materias .titulo_materia{
         display: flex;
@@ -309,6 +311,7 @@ body {
         cursor: pointer;
         font-weight: 600;
         text-decoration: none;
+        margin-left: 5px;
     }
    
     .materias .line_titulo{
@@ -319,71 +322,81 @@ body {
         margin-left: 10px;
     }
     
-    .conteudo_materia {
-        display: flex;
-        flex-direction:row;
-        flex-wrap: wrap;
-        width: 90%;
-        margin-left:0px;
-        padding: 20px;
-        heigth: 800px;
-        border-bottom: 2px solid white;
-    }
-    .conteudo_materia .bloco_materia{
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-        width: 100%;
-        height: 95%;
-        text-align: start;
-        border-bottom: 2px solid #C0C0C0;
-        margin-bottom: 10px;
-    }
-    .conteudo_materia .bloco_materia img{
-        width: 200px;
-        height: auto;
-        border-radius: 22px;
-        margin: 0 auto;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    .bloco_materia .texto_bloco_materia h4{
-        font-family: "Inter";
-        text-align: start;
-        margin-top: 10px;
-        cursor: pointer;
-    }
- .bloco_materia .texto_bloco_materia  a{
-        font-family: "Inter";
-        text-align: start;
-        margin-top: 25px;
-        color:#575757;
-        cursor: pointer;
-    }   
+.conteudo_materia {
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0px;
+    padding: 20px;
+    border: none;
+    box-sizing: border-box;
 }
 
-@media screen and (max-width:650px){
+.conteudo_materia .bloco_materia {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    text-align: start;
+    border-bottom: 2px solid #C0C0C0;
+    margin: 0 0 10px 0;
+    box-sizing: border-box; /* Importante */
+}
+
+.conteudo_materia .bloco_materia img {
+    width: 200px;
+    height: 150px;
+    border-radius: 22px;
+    margin: 0;
+    cursor: pointer;
+    object-fit: cover;
+    flex-shrink: 0; /* Evita encolher a imagem */
+}
+
+.bloco_materia .texto_bloco_materia {
+    margin: 0;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bloco_materia .texto_bloco_materia h4 {
+    font-family: "Inter";
+    text-align: start;
+    cursor: pointer;
+    margin:0;
+}
+
+.bloco_materia .texto_bloco_materia a {
+    font-family: "Inter";
+    text-align: start;
+    margin-top: 25px;
+    color: #575757;
+    cursor: pointer;
+}
+}
+
+@media screen and (max-width:600px){
     
     .manchete{
         display: inline-block;
         position: relative;
         width:100%;
-        height: 200px;
-        background-color: white;
+        height: auto;
+        background-color: #445857;
         top:0;
         font-family: 'Libre Baskerville';
         margin: 0 auto;
-        margin-top: 80px;
-        margin-bottom: 120px;
     }
 
     .manchete .bloco_manchete{
         display: block;
         position: relative;
-        top: -40px;
         width:100%;
         border-radius: 0px;
-        height: 350px;
         background-color: #7EA7A4;
         text-align: start;
         padding:10px;
@@ -394,15 +407,15 @@ body {
         padding: 10px;
         font-weight: 800;
         font-size: 28px;
-        margin-top: 15px;
-        margin-right: 10px;
+        margin-top: 5px;
+        margin-right: 5px;
         color: white;
         display: inline-block; /* Faz o tamanho do elemento ser ajustado ao conteúdo */
         word-wrap: break-word; /* Quebra as palavras e garante que o traço se ajuste ao conteúdo */
     }
     .bloco_manchete .noticia_principal h3 {
         position: relative; /* Necessário para o pseudoelemento ser posicionado corretamente */
-        padding: 10px;
+        padding: 5px;
         font-weight: 600;
         font-size: 18px;
         margin-right: 10px;
@@ -430,29 +443,23 @@ body {
         margin-left: 20px;
     }
     
-
     .materias {
-        order:2;
-        position:relative;
-        align-items: start;
-        order: 6;
-        margin-top: 0px; /* Ajuste esse valor conforme necessário */
-        width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;   /* espaço mínimo */
+    height: 650px;          /* ajusta conforme conteúdo */
+    margin-bottom: 20px;   /* garante separação de outros blocos */
+    position: relative;
+    z-index: 1;
+    overflow: visible;
     }
+
     .materias .titulo_materia{
         display: flex;
         margin-left: 20px;
     }
 
-    .materias a{
-        font-family: "Inter";
-        font-size: 25px;
-        color: black;
-        width: 95.5%;
-        cursor: pointer;
-        font-weight: 600;
-        text-decoration: none;
-    }
 
     .materias .line_titulo{
         border: 2px solid #00756A;
@@ -462,45 +469,61 @@ body {
         margin-left: 10px;
     }
     
-    .conteudo_materia {
-        display: flex;
-        flex-direction:row;
-        flex-wrap: wrap;
-        width: 90%;
-        margin-left:0px;
-        padding: 20px;
-        heigth: 800px;
-        border-bottom: 2px solid white;
-    }
-    .conteudo_materia .bloco_materia{
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-        width: 100%;
-        height: 95%;
-        text-align: start;
-        border-bottom: 2px solid #C0C0C0;
-        margin-bottom: 10px;
-    }
-    .conteudo_materia .bloco_materia img{
-        width: 200px;
-        height: auto;
-        border-radius: 22px;
-        margin: 0 auto;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    .bloco_materia .texto_bloco_materia h4{
-        font-family: "Inter";
-        text-align: start;
-        margin-top: 10px;
-        cursor: pointer;
-    }
- .bloco_materia .texto_bloco_materia  a{
-        font-family: "Inter";
-        text-align: start;
-        margin-top: 25px;
-        color:#575757;
-        cursor: pointer;
-    }   
+    
+.conteudo_materia {
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0px;
+    padding: 20px;
+    border:none;
+}
+
+.conteudo_materia .bloco_materia {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+    text-align: start;
+    border-bottom: 2px solid #C0C0C0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.conteudo_materia .bloco_materia img {
+    width: 180px;
+    height: 120px;           /* Define altura fixa */
+    border-radius: 22px;
+    margin: 0;               /* Remove centralização automática */
+    cursor: pointer;
+    object-fit: cover;       /* Garante que a imagem ocupe bem o espaço */
+}
+
+.bloco_materia .texto_bloco_materia {
+    padding-left: 0;
+    margin: 0;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: start;
+}
+
+.bloco_materia .texto_bloco_materia h4 {
+    font-family: "Inter";
+    text-align: start;
+    cursor: pointer;
+    margin:0;
+    font-size: 12px;
+}
+
+.bloco_materia .texto_bloco_materia a {
+    font-family: "Inter";
+    text-align: start;
+    margin-top: 18px;
+    color: #575757;
+    font-size: 10px;
+    cursor: pointer;
+} 
 }

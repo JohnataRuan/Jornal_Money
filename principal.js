@@ -60,47 +60,89 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 window.addEventListener('DOMContentLoaded', importarTopo);
 
-document.addEventListener('DOMContentLoaded', () => selecionarMateriasPorCategoria(1));
-
-async function selecionarMateriasPorCategoria(id_categoria) {
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch(`${linkBancoDeDados}/rotas/categoriasMateria/${id_categoria}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
+        const categorias = [
+            { id: 1, htmlId: 'materias_Economia' },
+            { id: 2, htmlId: 'materias_Politica' },
+            { id: 3, htmlId: 'materias_Curiosidades' },
+            { id: 4, htmlId: 'materias_Previsões' }
+        ];
 
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+        for (let categoria of categorias) {
+            const dados = await selecionarMateriasComuns(categoria.id);
+            carregarMateriasComuns(dados, categoria.htmlId);
         }
-
-        const data = await response.json();
-        console.log("Matérias recebidas:", data);
-        return data;
     } catch (error) {
-        console.error("Erro ao buscar matérias:", error);
+        console.error("Erro ao carregar as matérias:", error);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const dadosMateriaPrincipal = await selecionarMateriaPrincipal() // Aguarda os dados
+        carregarMateriaPrincipal(dadosMateriaPrincipal);
+        const dadosMateriaSecundaria = await selecionarMateriaSecundaria(); // Aguarda os dados
+        carregarMateriaSecundarias(dadosMateriaSecundaria);
+    } catch (error) {
+        console.error("Erro ao carregar as matérias:", error);
+    }
+});
+
+
+
+//Imporar a materia que servira como materia principal
+function carregarMateriaPrincipal(dados) {
+    const materiaPrincipal = document.getElementById('noticia_principal');
+
+    for (let materia of dados) {
+        const { id,titulo, subtitulo} = materia;
+
+            const bloco_materia = document.createElement('a')
+            bloco_materia.href =  `../materia/materia.html?id=${id}`;
+            
+            const tituloMateriaPrincipal = titulo;
+            const subTituloMateriaPrincipal = subtitulo;
+
+            const materiaPrincipalh1 = document.createElement('h1'); // Corrigido
+            materiaPrincipalh1.textContent = tituloMateriaPrincipal;
+
+            const materiaPrincipalh3 = document.createElement('h3'); // Corrigido
+            materiaPrincipalh3.textContent = subTituloMateriaPrincipal;
+
+                bloco_materia.appendChild(materiaPrincipalh1);
+                bloco_materia.appendChild(materiaPrincipalh3);
+                materiaPrincipal.appendChild(bloco_materia);
+}
+}
+//Carregar materias secundarias
+function carregarMateriaSecundarias(dados) {
+    const blocoManchete = document.getElementById('bloco_manchete');
+    let count = 0;
+
+    for (let materia of dados) {
+        const { id,titulo} = materia;
+
+            const submateria = document.createElement('a');
+            submateria.href = `../materia/materia.html?id=${id}`;
+            submateria.className = 'sub-materias'; // Corrigido
+
+            const line = document.createElement('div');
+            line.className = 'line';
+
+            const tituloSubmateria = document.createElement('h4');
+            tituloSubmateria.textContent = titulo;
+
+            submateria.appendChild(line);
+            submateria.appendChild(tituloSubmateria);
+
+            blocoManchete.appendChild(submateria);
+
+            count++;
     }
 }
-
-async function selecionarTodasMaterias(){
-    try{
-        const response = await fetch(`${linkBancoDeDados}/rotas/todasMaterias`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    });
-
-    if (!response.ok) {
-        throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
-    }
-
-        const data = await response.json();
-        return data;
-
-    } catch (error) {
-        console.error("Erro ao buscar matérias:", error);
-    }
-}
-
-function transformarMateriaEmHtml(dados, id_html) {
+//Carregar materias comuns
+function carregarMateriasComuns(dados, id_html) {
     const container = document.getElementById(id_html);
     if (!container) {
         console.error("Elemento HTML não encontrado!");
@@ -119,7 +161,7 @@ function transformarMateriaEmHtml(dados, id_html) {
     };
 
     for (let materia of dados) {
-        const { id,titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
+        const { id,titulo,imagem_url, categoria_id,nivelDestaque,datapublicacao } = materia;
 
         if (Number(nivelDestaque) === 3 && contadores[categoria_id] < 4) {
             contadores[categoria_id]++; // incrementa contador da categoria
@@ -173,96 +215,58 @@ function transformarMateriaEmHtml(dados, id_html) {
     container.appendChild(conteudo_materia);
 }
 
+//Carregar materia principal
+async function selecionarMateriaPrincipal(){
+    try{
+        const response = await fetch(`${linkBancoDeDados}/rotas/materiaPrincipal`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+    }
 
-//Imporar a materia que servira como materia principal
-function carregarMateriaPrincipal(dados) {
-    const materiaPrincipal = document.getElementById('noticia_principal');
+        const data = await response.json();
+        return data;
 
-    for (let materia of dados) {
-        const { id,titulo, subtitulo, conteudo, imagem_url, categoria_id, isDestaque, nivelDestaque, datapublicacao } = materia;
-
-        if (Number(nivelDestaque) === 1 && Number(isDestaque)===1) {
-            const bloco_materia = document.createElement('a')
-            bloco_materia.href =  `../materia/materia.html?id=${id}`;
-            
-            const tituloMateriaPrincipal = titulo;
-            const subTituloMateriaPrincipal = subtitulo;
-
-            const materiaPrincipalh1 = document.createElement('h1'); // Corrigido
-            materiaPrincipalh1.textContent = tituloMateriaPrincipal;
-
-            const materiaPrincipalh3 = document.createElement('h3'); // Corrigido
-            materiaPrincipalh3.textContent = subTituloMateriaPrincipal;
-
-                bloco_materia.appendChild(materiaPrincipalh1);
-                bloco_materia.appendChild(materiaPrincipalh3);
-                materiaPrincipal.appendChild(bloco_materia);
-        }
-}
-}
-
-function carregarSubMaterias(dados) {
-    const blocoManchete = document.getElementById('bloco_manchete');
-    let count = 0;
-
-    for (let materia of dados) {
-        const { id,titulo, isDestaque, nivelDestaque } = materia;
-
-        if (Number(isDestaque) === 1 && Number(nivelDestaque) === 2) {
-            if (count >= 3) break; // Garante no máximo 3 matérias
-
-            const submateria = document.createElement('a');
-            submateria.href = `../materia/materia.html?id=${id}`;
-            submateria.className = 'sub-materias'; // Corrigido
-
-            const line = document.createElement('div');
-            line.className = 'line';
-
-            const tituloSubmateria = document.createElement('h4');
-            tituloSubmateria.textContent = titulo;
-
-            submateria.appendChild(line);
-            submateria.appendChild(tituloSubmateria);
-
-            blocoManchete.appendChild(submateria);
-
-            count++;
-        }
+    } catch (error) {
+        console.error("Erro ao buscar matérias:", error);
     }
 }
+//Carregar Materias secundarias
+async function selecionarMateriaSecundaria(){
+    try{
+        const response = await fetch(`${linkBancoDeDados}/rotas/materiaSecundarias`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+    }
 
-document.addEventListener('DOMContentLoaded', async () => {
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Erro ao buscar matérias:", error);
+    }
+}
+//Carregar materias comuns por id_categoria
+async function selecionarMateriasComuns(id_categoria) {
     try {
-        const categorias = [
-            { id: 1, htmlId: 'materias_Economia' },
-            { id: 2, htmlId: 'materias_Politica' },
-            { id: 3, htmlId: 'materias_Curiosidades' },
-            { id: 4, htmlId: 'materias_Previsões' }
-        ];
+        const response = await fetch(`${linkBancoDeDados}/rotas/categoriasMateria/${id_categoria}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
 
-        for (let categoria of categorias) {
-            const dados = await selecionarMateriasPorCategoria(categoria.id);
-            transformarMateriaEmHtml(dados, categoria.htmlId);
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
         }
-    } catch (error) {
-        console.error("Erro ao carregar as matérias:", error);
-    }
-});
 
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const dados = await selecionarTodasMaterias() // Aguarda os dados
-        carregarMateriaPrincipal(dados);
+        const data = await response.json();
+        console.log("Matérias recebidas:", data);
+        return data;
     } catch (error) {
-        console.error("Erro ao carregar as matérias:", error);
+        console.error("Erro ao buscar matérias:", error);
     }
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const dados = await selecionarTodasMaterias(); // Aguarda os dados
-        carregarSubMaterias(dados);
-    } catch (error) {
-        console.error("Erro ao carregar as matérias:", error);
-    }
-});
+}

@@ -19,11 +19,11 @@ function capturarDados() {
   const subtitulo = document.getElementById('subtitulo').value.trim();
   const conteudo = document.getElementById('conteudo').value.trim();
   const imagem_url = document.getElementById('imagem_url').value.trim();
-  const categoria = document.getElementById('categoria_id').value; // Corrigido ID
+  const categoria_id = document.getElementById('categoria_id').value; 
   const isDestaque = document.getElementById('isDestaque').value;
   const nivelDestaque = document.getElementById('nivelDestaque').value;
-
-  if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria) {
+  console.log(categoria_id);
+  if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria_id) {
       alert("Preencha todos os campos!");
       return;
   }
@@ -35,7 +35,7 @@ function capturarDados() {
       subtitulo,
       conteudo,
       imagem_url,
-      categoria,
+      categoria_id,
       isDestaque,
       nivelDestaque,
       dataHora: dataHoraAtual

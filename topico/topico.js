@@ -24,15 +24,22 @@ fetch(`${linkBancoDeDados}/rotas/topicos/${id}`) // Correto
         document.getElementById('tituloTopico').textContent = 'Previsões'
         document.title = `Jornal Money - Previsões`
     }
-    
-    criarMateriaPrincipal(data);
-    criarMateriaSecundarias(data);
     criarMateriaComuns(data)
   })
   .catch(err => {
     console.error(err);
   });
 
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const dadosMateriaPrincipal = await selecionarMateriaPrincipal(id) // Aguarda os dados
+        criarMateriaPrincipal(dadosMateriaPrincipal);
+        const dadosMateriaSecunaria = await selecionarMateriaSecundarias(id) // Aguarda os dados
+        criarMateriaSecundarias(dadosMateriaSecunaria);
+    } catch (error) {
+        console.error("Erro ao carregar as matérias:", error);
+    }
+});
 
 
 
@@ -44,7 +51,7 @@ function criarMateriaPrincipal(data){
             if(materia.nivelDestaque === 1){
                  const bloco_materia = document.createElement('a');
                 bloco_materia.className = 'bloco_materia';
-                bloco_materia.href = `../materia/materia.html?id=${id}`;
+                bloco_materia.href = `../materia/materia.html?id=${materia.id}`;
                 const img = document.createElement('img');
                 img.src = materia.imagem_url;
 
@@ -89,28 +96,7 @@ function criarMateriaPrincipal(data){
 function criarMateriaSecundarias(data) {
     const bloco_principal = document.querySelector('.bloco_topico_principal');
     
-    // Filtra apenas as matérias com nível de destaque 2
-    const materiasSecundarias = data.filter(m => m.nivelDestaque === 2);
-
-    // Remove duplicadas com base no título (pode usar outro campo único se preferir)
-    const materiasUnicas = [];
-    const titulosSet = new Set();
-
-    for (const materia of materiasSecundarias) {
-        if (!titulosSet.has(materia.titulo)) {
-            titulosSet.add(materia.titulo);
-            materiasUnicas.push(materia);
-        }
-        if (materiasUnicas.length === 2) break; // só precisamos de duas
-    }
-
-    // Garante que tenha ao menos duas diferentes
-    if (materiasUnicas.length < 2) {
-        console.warn('Não há matérias secundárias suficientes e únicas.');
-        return;
-    }
-
-    for (const materia of materiasUnicas) {
+    for (const materia of data) {
         const blocoMateriaSecundaria = document.createElement('a');
         blocoMateriaSecundaria.href = `../materia/materia.html?id=${materia.id}`;
         blocoMateriaSecundaria.className = 'materia_secundaria';
@@ -162,7 +148,6 @@ function criarMateriaComuns(data) {
     return;
   }
 
-  // Filtra apenas matérias com nivelDestaque === 0
   const materiasComuns = data.filter(m => m.nivelDestaque === 3);
 
   if (materiasComuns.length === 0) {
@@ -285,3 +270,36 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 window.addEventListener('DOMContentLoaded', importarTopo);
+
+async function selecionarMateriaPrincipal(id_categoria){
+    try{
+        const response = await fetch(`${linkBancoDeDados}/rotas/materiaPrincipalTopico/${id_categoria}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+    }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Erro ao buscar matérias:", error);
+    }
+}
+async function selecionarMateriaSecundarias(id_categoria){
+    try{
+        const response = await fetch(`${linkBancoDeDados}/rotas/materiaSecundariaTopico/${id_categoria}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
+    }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Erro ao buscar matérias:", error);
+    }
+}
