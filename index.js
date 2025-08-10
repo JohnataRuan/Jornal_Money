@@ -10,7 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const allowedOrigins = ['http://127.0.0.1:5500', 'https://jornalmoney.com'];
+const allowedOrigins = [
+  'http://127.0.0.1:5500',
+  'http://localhost:5500',
+  'http://localhost:3000',
+  'https://jornalmoney.com'
+];
 
 app.use(cors({
   origin: function(origin, callback){
