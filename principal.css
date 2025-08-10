@@ -36,6 +36,7 @@ body {
 }
 
 
+
 .bloco_manchete .noticia_principal {
     position: relative; /* Necessário para que o hover na div afete os filhos */
     cursor: pointer;

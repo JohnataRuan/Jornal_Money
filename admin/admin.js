@@ -19,26 +19,29 @@ function capturarDados() {
   const subtitulo = document.getElementById('subtitulo').value.trim();
   const conteudo = document.getElementById('conteudo').value.trim();
   const imagem_url = document.getElementById('imagem_url').value.trim();
-  const categoria_id = document.getElementById('categoria_id').value; 
+  const categoria = document.getElementById('categoria_id').value; 
   const isDestaque = document.getElementById('isDestaque').value;
   const nivelDestaque = document.getElementById('nivelDestaque').value;
-  console.log(categoria_id);
-  if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria_id) {
+  
+  if (!titulo || !subtitulo || !conteudo || !imagem_url || !categoria) {
       alert("Preencha todos os campos!");
       return;
   }
 
-  const dataHoraAtual = new Date().toISOString(); // Formata a data corretamente
+  const dataHoraAtual = new Date().toISOString();
+
+  const slug = gerarSlug(titulo);  // gera o slug aqui
 
   const dados = {
       titulo,
       subtitulo,
       conteudo,
       imagem_url,
-      categoria_id,
+      categoria,
       isDestaque,
       nivelDestaque,
-      dataHora: dataHoraAtual
+      dataHora: dataHoraAtual,
+      slug  // adiciona slug aqui
   };
 
   enviarDados(dados);
@@ -60,7 +63,15 @@ async function enviarDados(dados) {
   }
 }
 
-
+function gerarSlug(texto) {
+  return texto
+    .toLowerCase()
+    .normalize('NFD')                  // remove acentos
+    .replace(/[\u0300-\u036f]/g, '')  // remove acentos
+    .replace(/[^\w\s-]/g, '')         // remove caracteres especiais
+    .trim()
+    .replace(/\s+/g, '-');            // troca espaços por hífen
+}
 
   export async function verGet() {
     try {

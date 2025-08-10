@@ -14,7 +14,7 @@ footer {
 }
 
 footer .conteudo_footer {
-    width: 100vh;
+    width: 70%;
     height: auto;
     min-height: 200px; /* opcional, evita footers finos */
     padding: 20px;
@@ -107,9 +107,10 @@ footer a:hover {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    text-align: center;
     align-items: center; /* Centraliza verticalmente */
     width: 100%;
-    margin: 20px 10px;
+    margin-top: 10px;
 }
 
 .descricao_footer img {
@@ -123,7 +124,7 @@ footer a:hover {
 .descricao_footer p {
     font-family: "Inter", sans-serif;
     color: white;
-    margin-left: 5px;
+    margin:0;
 }
 
 /* 📱 Responsividade para telas menores */
@@ -158,126 +159,141 @@ footer a:hover {
 
 @media screen and (max-width: 600px) {
     footer {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: start;
-    text-align: start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%; /* Alterado de height para min-height */
-    background-color: #445857;
-    font-family: "Inter", sans-serif;
-    margin-top: 20px;
-}
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        align-items: start;
+        text-align: start;
+        justify-content: flex-start;
+        width: 100%;
+        height: auto;
+        background-color: #445857;
+        font-family: "Inter", sans-serif;
+        margin-top: 20px;
+    }
 
-footer .conteudo_footer {
-    width: 800px;
-    height: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    text-align: start;
-    justify-content: flex-start;
-}
+    footer .conteudo_footer {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        text-align: start;
+        justify-content: flex-start;
+        box-sizing: border-box;
+    }
 
-.conteudo_footer img, .logo_branca {
-    margin: 0;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 200px;
-    height: auto; /* Corrigido de 'heigth' para 'height' */
-    cursor: pointer;
-}
+    .conteudo_footer img, 
+    .logo_branca {
+        margin: 5px 0;
+        max-width: 100%;
+        width: 200px;
+        height: auto;
+        cursor: pointer;
+    }
 
-.conteudo_footer img:hover {
-    content: url("../utils/img/logo-cinza.png");
-}
-.fale_conosco{
-    display:flex;
-    flex-direction: column;
-    align-self: start;
-    margin: 0;
-}
-.fale_conosco h4 {
-    order:0;
-    margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: white;
-    font-size: 16px;
-}
-.fale_conosco p {
-    order:2;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: 600;
-}
-footer a {
-    margin-left: 18px;
-    margin-bottom: 20px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: 600;
-}
+    .conteudo_footer img:hover {
+        content: url("../utils/img/logo-cinza.png");
+    }
 
-footer a:hover {
-    color: #C0C0C0;
-}
+    .fale_conosco {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+        margin: 0;
+    }
 
-.conteudo_footer .line_footer {
-    width: 100%;
-    border: 1px solid white;
-}
-.logos_footer{
-    margin-left:160px;
-}
-.logos_footer img{
-    width: 40px;
-}
-/* Ajuste no hover das imagens de redes sociais */
-.logos_footer img:nth-child(1):hover {
-    content: url("../utils/icons/ic--baseline-facebook\ \(1\).svg");
-}
+    .fale_conosco h4 {
+        order: 0;
+        margin: 10px 0 10px 20px;
+        color: white;
+        font-size: 16px;
+    }
 
-.logos_footer img:nth-child(2):hover {
-    content: url("../utils/icons/mdi--instagram\ \(1\).svg");
-}
+    .fale_conosco p {
+        order: 2;
+        margin: 0 0 10px 20px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        font-weight: 600;
+    }
 
-.logos_footer img:nth-child(3):hover {
-    content: url("../utils/icons/mdi--linkedin\ \(1\).svg");
-}
+    footer a {
+        margin-left: 18px;
+        margin-bottom: 20px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        font-weight: 600;
+    }
 
-.logos_footer img:nth-child(4):hover {
-    content: url("../utils/icons/mdi--youtube\ \(1\).svg");
-}
+    footer a:hover {
+        color: #C0C0C0;
+    }
 
-.descricao_footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; /* Centraliza verticalmente */
-    width: 100%;
-    margin: 20px 10px;
-}
+    .conteudo_footer .line_footer {
+        width: 100%;
+        border: 1px solid white;
+        box-sizing: border-box;
+    }
 
-.descricao_footer img {
-    width: 20px;
-    height: auto;
-    margin: 0;
-    cursor: default;
-    content: unset !important;
-}
+    .logos_footer {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 10px auto 0 auto; /* Centraliza no mobile */
+        gap: 5px;
+    }
 
-.descricao_footer p {
-    font-family: "Inter", sans-serif;
-    color: white;
-    margin-left: 5px;
-}
+    .logos_footer img {
+        width: 40px;
+        height: auto;
+    }
+
+    /* Ajuste no hover das imagens de redes sociais */
+    .logos_footer img:nth-child(1):hover {
+        content: url("../utils/icons/ic--baseline-facebook\ \(1\).svg");
+    }
+
+    .logos_footer img:nth-child(2):hover {
+        content: url("../utils/icons/mdi--instagram\ \(1\).svg");
+    }
+
+    .logos_footer img:nth-child(3):hover {
+        content: url("../utils/icons/mdi--linkedin\ \(1\).svg");
+    }
+
+    .logos_footer img:nth-child(4):hover {
+        content: url("../utils/icons/mdi--youtube\ \(1\).svg");
+    }
+
+    .descricao_footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        word-break: break-word;
+        margin: 20px 10px;
+        box-sizing: border-box;
+    }
+
+    .descricao_footer img {
+        width: 20px;
+        height: auto;
+        margin: 0;
+        cursor: default;
+        content: unset !important;
+    }
+
+    .descricao_footer p {
+        font-family: "Inter", sans-serif;
+        color: white;
+        margin-left: 5px;
+    }
 }

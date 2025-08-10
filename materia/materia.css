@@ -327,7 +327,7 @@ body {
 }
 .conteudo_materia img{
     order:3;
-    width: 450px;
+    width: 100%;
     height: 300px;
     border-radius: 22px !important;           
     margin: 0;              
@@ -383,11 +383,13 @@ body {
 .bloco_relacionados{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap:5px;
 }
 .bloco_materia {
-    width: 33%;
+    display: flex;
+    margin: 0;
+    width: 100%;
     text-decoration: none;
 }
 
@@ -405,6 +407,7 @@ body {
     font-family: "Inter";
     text-align: start;
     margin-top: 10px;
+    margin-left: 10px;
     font-size: 15px;
     cursor: pointer;
     color: black;
@@ -415,6 +418,7 @@ body {
     font-family: "Inter";
     text-align: start;
     margin-top: 5px;
+    margin-left: 10px;
     font-size: 12px;
     color:#575757;
     cursor: pointer;

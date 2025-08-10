@@ -1,4 +1,5 @@
 import { linkBancoDeDados } from './utils/arquivos/linkBancoDeDados.js';
+import { linkPaginaTopicoEconomia,linkPaginaTopicoPolitica,linkPaginaTopicoCuriosidades,linkPaginaTopicoPrevisoes } from './utils/arquivos/linkTopico.js';
 
 async function importarTopo() {
     try {
@@ -96,10 +97,10 @@ function carregarMateriaPrincipal(dados) {
     const materiaPrincipal = document.getElementById('noticia_principal');
 
     for (let materia of dados) {
-        const { id,titulo, subtitulo} = materia;
+        const { id,titulo, subtitulo,slug} = materia;
 
             const bloco_materia = document.createElement('a')
-            bloco_materia.href =  `../materia/materia.html?id=${id}`;
+            bloco_materia.href =  `../materia/materia.html?slug=${slug}`;
             
             const tituloMateriaPrincipal = titulo;
             const subTituloMateriaPrincipal = subtitulo;
@@ -121,10 +122,10 @@ function carregarMateriaSecundarias(dados) {
     let count = 0;
 
     for (let materia of dados) {
-        const { id,titulo} = materia;
+        const { id,titulo,slug} = materia;
 
             const submateria = document.createElement('a');
-            submateria.href = `../materia/materia.html?id=${id}`;
+            submateria.href = `../materia/materia.html?slug=${slug}`;
             submateria.className = 'sub-materias'; // Corrigido
 
             const line = document.createElement('div');
@@ -161,14 +162,14 @@ function carregarMateriasComuns(dados, id_html) {
     };
 
     for (let materia of dados) {
-        const { id,titulo,imagem_url, categoria_id,nivelDestaque,datapublicacao } = materia;
+        const { id,titulo,imagem_url, categoria_id,nivelDestaque,datapublicacao,slug } = materia;
 
         if (Number(nivelDestaque) === 3 && contadores[categoria_id] < 4) {
             contadores[categoria_id]++; // incrementa contador da categoria
 
             const bloco_materia = document.createElement('a');
             bloco_materia.className = 'bloco_materia';
-            bloco_materia.href = `../materia/materia.html?id=${id}`;
+            bloco_materia.href = `../materia/materia.html?slug=${slug}`;
 
             const img = document.createElement('img');
             img.src = imagem_url;
@@ -184,19 +185,19 @@ function carregarMateriasComuns(dados, id_html) {
             switch (categoria_id) {
                 case 1:
                     categoria_Materia.textContent = 'Economia';
-                    categoria_Materia.href = "../topico/topico.html?id=1";
+                    categoria_Materia.href = `${linkPaginaTopicoEconomia}`;
                     break;
                 case 2:
                     categoria_Materia.textContent = 'Política';
-                    categoria_Materia.href = "../topico/topico.html?id=2";
+                    categoria_Materia.href = `${linkPaginaTopicoPolitica}`;
                     break;
                 case 3:
                     categoria_Materia.textContent = 'Curiosidades';
-                    categoria_Materia.href = "../topico/topico.html?id=3";
+                    categoria_Materia.href = `${linkPaginaTopicoCuriosidades}`;
                     break;
                 case 4:
                     categoria_Materia.textContent = 'Previsões';
-                    categoria_Materia.href = "../topico/topico.html?id=4";
+                    categoria_Materia.href = `${linkPaginaTopicoPrevisoes}`;
                     break;
                 default:
                     categoria_Materia.textContent = 'Outros';

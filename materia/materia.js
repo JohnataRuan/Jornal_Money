@@ -1,28 +1,34 @@
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
 import { linkBancoDeDados } from '../utils/arquivos/linkBancoDeDados.js';
+import { linkPaginaTopicoEconomia,linkPaginaTopicoPolitica,linkPaginaTopicoCuriosidades,linkPaginaTopicoPrevisoes } from '../utils/arquivos/linkTopico.js';
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("slug");
 
-console.log(linkBancoDeDados);
-fetch(`${linkBancoDeDados}/rotas/materiatitulo/${id}`)
-  .then(response => {
-    if (!response.ok) throw new Error("Erro ao buscar tópico");
-    return response.json();
-  })
-  .then(data => {
-    console.log("Matéria principal:", data);
-    document.title = data[0].titulo;
-    transformarMateriaEmHtml(data[0]); // Exibe a matéria principal
+if (!slug) {
+  console.error("Slug da matéria não fornecido na URL.");
+} else {
+  fetch(`${linkBancoDeDados}/rotas/materias/slug/${slug}`)
+    .then(response => {
+      if (!response.ok) throw new Error("Erro ao buscar matéria");
+      return response.json();
+    })
+    .then(data => {
+      if (!data || data.length === 0) throw new Error("Matéria não encontrada");
+      
+      console.log("Matéria principal:", data);
+      document.title = data.titulo;
+      transformarMateriaEmHtml(data); // Exibe a matéria principal
 
-    // Busca matérias relacionadas pela mesma categoria
-    return selecionarMateriasPorCategoria(data[0].categoria_id);
-  })
-  .then(materiasRelacionados => {
-    console.log("Matérias relacionadas:", materiasRelacionados);
-    transformarMateriaRelacionados(materiasRelacionados); // Exibe as relacionadas
-  })
-  .catch(err => {
-    console.error("Erro geral:", err);
-  });
+      // Busca matérias relacionadas pela mesma categoria
+      return selecionarMateriasPorCategoria(data.categoria_id);
+    })
+    .then(materiasRelacionados => {
+      console.log("Matérias relacionadas:", materiasRelacionados);
+      transformarMateriaRelacionados(materiasRelacionados); // Exibe as relacionadas
+    })
+    .catch(err => {
+      console.error("Erro geral:", err);
+    });
+}
 
 function transformarMateriaEmHtml(materia){
 
@@ -76,11 +82,11 @@ function transformarMateriaRelacionados(dados) {
   conteudo_materia.className = 'bloco_relacionados';
 
   for (let materia of dados) {
-    const { id,titulo, imagem_url, categoria_id } = materia;
+    const { id,titulo, imagem_url, categoria_id,slug } = materia;
 
     const bloco_materia = document.createElement('a');
     bloco_materia.className = 'bloco_materia';
-    bloco_materia.href = `../materia/materia.html?id=${id}`;
+    bloco_materia.href = `../materia/materia.html?slug=${slug}`;
 
     const img = document.createElement('img');
     img.src = imagem_url;
@@ -95,23 +101,24 @@ function transformarMateriaRelacionados(dados) {
     const categoria_Materia = document.createElement('a');
     switch (categoria_id) {
       case 1:
-        categoria_Materia.textContent = 'Economia';
-        categoria_Materia.href = "../topico/topico.html?id=1";
-        break;
-      case 2:
-        categoria_Materia.textContent = 'Política';
-        categoria_Materia.href = "../topico/topico.html?id=2";
-        break;
-      case 3:
-        categoria_Materia.textContent = 'Curiosidades';
-        categoria_Materia.href = "../topico/topico.html?id=3";
-        break;
-      case 4:
-        categoria_Materia.textContent = 'Previsões';
-        categoria_Materia.href = "../topico/topico.html?id=4";
-        break;
-      default:
-        categoria_Materia.textContent = 'Outros';
+                case 1:
+                    categoria_Materia.textContent = 'Economia';
+                    categoria_Materia.href = `${linkPaginaTopicoEconomia}`;
+                    break;
+                case 2:
+                    categoria_Materia.textContent = 'Política';
+                    categoria_Materia.href = `${linkPaginaTopicoPolitica}`;
+                    break;
+                case 3:
+                    categoria_Materia.textContent = 'Curiosidades';
+                    categoria_Materia.href = `${linkPaginaTopicoCuriosidades}`;
+                    break;
+                case 4:
+                    categoria_Materia.textContent = 'Previsões';
+                    categoria_Materia.href = `${linkPaginaTopicoPrevisoes}`;
+                    break;
+                default:
+                    categoria_Materia.textContent = 'Outros';
     }
 
     texto_bloco_materia.appendChild(titulo_Materia);
