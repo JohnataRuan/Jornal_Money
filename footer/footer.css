@@ -34,9 +34,10 @@ footer .conteudo_footer {
     cursor: pointer;
 }
 
-.conteudo_footer img:hover {
+#logo:hover {
     content: url("../utils/img/logo-cinza.png");
 }
+
 .fale_conosco{
     display:flex;
     flex-direction: column;
@@ -59,7 +60,7 @@ footer .conteudo_footer {
     text-decoration: none;
     font-weight: 600;
 }
-footer a {
+footer a  {
     margin-left: 18px;
     margin-bottom: 20px;
     color: white;
@@ -86,21 +87,24 @@ footer a:hover {
     height: auto; /* Corrigido de 'heigth' para 'height' */
 }
 
-/* Ajuste no hover das imagens de redes sociais */
-.logos_footer img:nth-child(1):hover {
-    content: url("../utils/icons/ic--baseline-facebook\ \(1\).svg");
+#logo:hover {
+    content: url("../utils/img/logo-cinza.png");
 }
 
-.logos_footer img:nth-child(2):hover {
-    content: url("../utils/icons/mdi--instagram\ \(1\).svg");
+.facebook:hover {
+    content: url("../utils/icons/ic--baseline-facebook (1).svg");
 }
 
-.logos_footer img:nth-child(3):hover {
-    content: url("../utils/icons/mdi--linkedin\ \(1\).svg");
+.instagram:hover {
+    content: url("../utils/icons/mdi--instagram (1).svg");
 }
 
-.logos_footer img:nth-child(4):hover {
-    content: url("../utils/icons/mdi--youtube\ \(1\).svg");
+.linkedin:hover {
+    content: url("../utils/icons/mdi--linkedin (1).svg");
+}
+
+.youtube:hover {
+    content: url("../utils/icons/mdi--youtube (1).svg");
 }
 
 .descricao_footer {
@@ -252,23 +256,6 @@ footer a:hover {
     .logos_footer img {
         width: 40px;
         height: auto;
-    }
-
-    /* Ajuste no hover das imagens de redes sociais */
-    .logos_footer img:nth-child(1):hover {
-        content: url("../utils/icons/ic--baseline-facebook\ \(1\).svg");
-    }
-
-    .logos_footer img:nth-child(2):hover {
-        content: url("../utils/icons/mdi--instagram\ \(1\).svg");
-    }
-
-    .logos_footer img:nth-child(3):hover {
-        content: url("../utils/icons/mdi--linkedin\ \(1\).svg");
-    }
-
-    .logos_footer img:nth-child(4):hover {
-        content: url("../utils/icons/mdi--youtube\ \(1\).svg");
     }
 
     .descricao_footer {

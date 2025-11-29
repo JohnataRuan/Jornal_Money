@@ -43,9 +43,8 @@ body {
     flex-direction: row;
     margin-top: 30px;
     width: 100%;
-    height: 100px;
+    height: 100%;
     gap: 10px;
-    margin-bottom: 200px;
 }
 .bloco_topico_principal .materia_principal{
     width: 45%;
@@ -85,7 +84,7 @@ body {
 
 .bloco_topico_principal .materia_secundaria{
     width: 27%;
-    height: 100%;
+    height: auto;
     text-decoration: none;
 }
 .bloco_topico_principal .materia_secundaria img{
