@@ -12,20 +12,19 @@ function handleDisconnect() {
         database: process.env.DB_NAME
     });
 
-    connection.connect((err) => {
+    connection.connect(err => {
         if (err) {
             console.error('Erro ao conectar no banco:', err);
-            setTimeout(handleDisconnect, 2000); // Tenta novamente após 2 segundos
+            setTimeout(handleDisconnect, 2000);
         } else {
             console.log('Banco de Dados Conectado com sucesso!');
         }
     });
 
-    connection.on('error', (err) => {
-        console.error('Erro no banco de dados:', err);
+    connection.on('error', err => {
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-            console.log('Conexão com banco de dados perdida. Reconectando...');
-            handleDisconnect(); // Reconecta
+            console.log('Reconectando ao banco...');
+            handleDisconnect();
         } else {
             throw err;
         }
@@ -34,4 +33,9 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-module.exports = () => connection;
+// ✅ AGORA SIM: exporta uma FUNÇÃO
+function getConnection() {
+    return connection;
+}
+
+module.exports = getConnection;
