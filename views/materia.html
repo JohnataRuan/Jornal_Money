@@ -4,40 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- 🔹 SEO / Open Graph (dinâmico via backend) -->
     <title>{{titulo}}</title>
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="{{titulo}}">
-    <meta property="og:description" content="{{subtitulo}}">
+    <meta property="og:description" content="{{descricao}}">
     <meta property="og:image" content="{{imagem}}">
     <meta property="og:url" content="{{url}}">
     <meta property="og:site_name" content="Jornal Money">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- 🔹 CSS ORIGINAL DO FRONT -->
     <link rel="stylesheet" href="/materia/materia.css">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/utils/icons/logooo.png" type="image/png">
 </head>
 <body>
 
-    <div class="conteudo_materia"></div>
+    <div class="conteudo_materia">
+        {{CONTEUDO_MATERIA}}
+    </div>
 
     <div class="relacionados" id="relacionados">
         <div class="titulo_relacionados">
             <div class="line"></div>
             <h1>Relacionados</h1>
         </div>
-
         <div class="conteudo_relacionados" id="conteudo_relacionados"></div>
     </div>
 
     <div id="footer-container"></div>
 
-    <!-- 🔹 JS ORIGINAL DO FRONT -->
     <script type="module" src="/materia/materia.js"></script>
 </body>
 </html>
