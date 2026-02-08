@@ -22,7 +22,9 @@ const allowedOrigins = [
   'http://127.0.0.1:5500',
   'http://localhost:5500',
   'http://localhost:3000',
-  'https://jornalmoney.com'
+  'https://jornalmoney.com',
+  'https://curriculo.jornalmoney.com',
+  'http://curriculo.jornalmoney.com'
 ];
 
 app.use(cors({
